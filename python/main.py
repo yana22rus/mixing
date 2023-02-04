@@ -26,7 +26,7 @@ def python():
                 cur.execute("INSERT INTO Data (city) VALUES  (?)", (data,))
 
         if request.form["submit"] == "Удалить":
-            delete(request.form.get("id"))
+            delete(request.form.get("city"))
 
         if request.form["submit"] == "Изменить":
             update(request.form["city"], request.form["id"])
@@ -39,7 +39,7 @@ def python():
     return render_template("crud.htm", lst_city=lst_city)
 
 
-@app.route("/delete", methods=["POST"])
+@app.route("/delete/<int:entity_id>", methods=["POST"])
 def delete(entity_id):
     with sqlite3.connect(file) as con:
         cur = con.cursor()
