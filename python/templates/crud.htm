@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link type="text/css" href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet"/>
 </head>
 <body>
 <form method="POST">
@@ -10,14 +11,23 @@
     <input type="text" placeholder="city" name="city">
     <input type="submit" value="Сохранить" name="submit">
 </form>
-{%for x in lst_city%}
-{{x[0]}} {{x[1]}}
-<form method="POST">
+<ul>
+    {%for x in lst_city%}
+    <li>{{x[0]}} {{x[1]}}
+        <button id="id{{x[0]}}" onclick="edit(this.id)">Редактировать</button>
+        <form method="POST">
+            <input type="text" placeholder="city" name="city" class="id{{x[0]}}" value="{{x[1]}}" hidden>
+            <input type="text" hidden name="id" value="{{x[0]}}">
+            <input type="submit" value="Изменить" name="submit">
+        </form>
+        <form method="POST">
 
-    <input type="text" hidden placeholder="city" name="id" value="{{x[0]}}">
-    <input type="submit" value="Удалить" name="submit">
-</form>
-{% endfor %}
-
+            <input type="text" hidden placeholder="city" name="city" value="{{x[0]}}">
+            <input type="submit" value="Удалить" name="submit">
+        </form>
+        {% endfor %}
+    </li>
+</ul>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

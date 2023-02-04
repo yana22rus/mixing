@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
 import sqlite3
+
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -27,6 +28,9 @@ def python():
         if request.form["submit"] == "Удалить":
             delete(request.form.get("id"))
 
+        if request.form["submit"] == "Изменить":
+            update(request.form["city"], request.form["id"])
+
     with sqlite3.connect(file) as con:
         cur = con.cursor()
         cur.execute('SELECT * FROM Data')
@@ -35,11 +39,18 @@ def python():
     return render_template("crud.htm", lst_city=lst_city)
 
 
-@app.route("/delete/<int:entity_id>", methods=["POST"])
+@app.route("/delete", methods=["POST"])
 def delete(entity_id):
     with sqlite3.connect(file) as con:
         cur = con.cursor()
         cur.execute("DELETE FROM Data WHERE id = ?", (entity_id,))
+
+
+@app.route("/update", methods=["POST"])
+def update(city, city_id):
+    with sqlite3.connect(file) as con:
+        cur = con.cursor()
+        cur.execute("UPDATE Data SET city = ? WHERE id=?;", (city, city_id))
 
 
 if __name__ == "__main__":
