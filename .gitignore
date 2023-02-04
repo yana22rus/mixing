@@ -1,4 +1,4 @@
 .idea
 venv/
 __pycache__/
-*.ts
+python/static/js/*.ts
