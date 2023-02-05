@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>PHP</h1>
+<ul>
+{% for x in tmp %}
+<li><a href="http://127.0.0.1:500{{loop.index0}}">{{ x }}</a></li>
+{%  endfor %}
+</ul>
+</body>
+</html>

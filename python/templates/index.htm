@@ -5,9 +5,14 @@
     <title>Title</title>
 </head>
 <body>
+<h1>PYTHON</h1>
 <ul>
     {% for x in languages %}
-    <li><a href="http://127.0.0.1:500{{loop.index0}}/{{x}}">{{x}}</a></li>
+    {% if x=="python" %}
+        <li><a href="http://127.0.0.1:500{{loop.index0}}/{{x}}">{{x}}</a></li>
+    {% else %}
+    <li><a href="http://127.0.0.1:500{{loop.index0}}">{{x}}</a></li>
+    {% endif %}
     {% endfor %}
 </ul>
 </body>
