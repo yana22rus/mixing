@@ -7,19 +7,24 @@ require_once './vendor/autoload.php';
 $loader = new \Twig\Loader\FilesystemLoader('./templates');
 $twig = new \Twig\Environment($loader);
 
+$template = $twig->load('index.html.twig');
+$template_crud = $twig->load('crud.html.twig');
+
+define('JS_PATH', 'static/js/');
+
 
 if ('/' === $uri) {
 
-    $template = $twig->load('index.html.twig');
+
     $tmp = ['python', 'php', 'node', 'java', 'golang'];
     echo $template->render(["tmp" => $tmp]);
 } else if ("/php" === $uri) {
 
     $dir = 'sqlite:/home/qwe/Documents/mixing/Data.db';
 
-    if (isset($_POST['create'])){
+    if (isset($_POST['create'])) {
 
-        if (isset($_POST['city'])){
+        if (isset($_POST['city'])) {
             $dbh = new PDO($dir) or die("cannot open the database");
 
             $city = $_POST["city"];
@@ -29,21 +34,22 @@ if ('/' === $uri) {
         }
 
 
-    }else if (isset($_POST['submit2'])) {
+    } else if (isset($_POST['submit2'])) {
         echo 123;
     }
 
 
-    require __DIR__ . "/templates/" . 'crud.htm';
+    $db = new SQLite3('/home/qwe/Documents/mixing/Data.db');
 
+    $res = $db->query('SELECT * FROM Data');
 
-    $dbh = new PDO($dir) or die("cannot open the database");
-    $query = "SELECT * FROM Data";
-    foreach ($dbh->query($query) as $row) {
-        echo "{$row[0]} $row[1]<br>";
+    $arr = [];
+
+    while ($row = $res->fetchArray()) {
+        $arr[$row['id']] = $row['city'];
     }
-    $dbh = null;
 
-    print_r($dbh->query($query));
+    echo $template_crud->render(["arr" => $arr]);
+
 
 }
