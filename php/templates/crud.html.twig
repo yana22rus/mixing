@@ -3,36 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="static/css/style.css" rel="stylesheet" type="text/css">
 </head>
-<style>
-
-    form {
-        display: inline;
-    }
-
-</style>
+<body>
 <form method="POST">
-    <input type="text" name="city">
-    <input type="submit" name="create">
 
+    <input type="text" placeholder="city" name="city">
+    <input type="submit" value="Сохранить" name="create">
 </form>
 <ul>
     {% for k,v in arr %}
-        <li>{{ k }} {{ v }}
-            <button id="id{{ x[0] }}" onclick="edit(this.id)">Редактировать</button>
-            <form method="POST">
+    <li>{{ k }} {{ v }}
+        <button id="id{{ k }}" onclick="edit(this.id)">Редактировать</button>
+        <form method="POST">
+            <input type="text" placeholder="city" name="city" class="id{{ k }}" value="{{ y }}" hidden>
+            <input type="text" hidden name="id" value="{{ k }}">
+            <input type="submit" value="Изменить" name="update">
+        </form>
+        <form method="POST">
 
-                <input type="text" hidden placeholder="city" name="city" value="{{ k }}">
-                <input type="submit" value="Удалить" name="submit">
-            </form>
-        </li>
-    {% endfor %}
+            <input type="text" hidden placeholder="city" name="city" value="{{ k }}">
+            <input type="submit" value="Удалить" name="delete">
+        </form>
+        {% endfor %}
+    </li>
 </ul>
-<script>
-    function edit(id) {
-        document.querySelector("#".concat(id)).setAttribute("hidden", "hidden");
-        document.querySelector(".".concat(id)).removeAttribute('hidden');
-    }
+<script src="static/js/script.js">
 </script>
 </body>
 </html>

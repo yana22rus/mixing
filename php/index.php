@@ -34,8 +34,18 @@ if ('/' === $uri) {
         }
 
 
-    } else if (isset($_POST['submit2'])) {
-        echo 123;
+    } else if (isset($_POST['delete'])) {
+        $dbh = new PDO($dir) or die("cannot open the database");
+        $id = $_POST["city"];
+        $query = "DELETE FROM Data WHERE id = ('$id')";
+        $dbh->exec($query);
+    } else if (isset($_POST['update'])) {
+        $dbh = new PDO($dir) or die("cannot open the database");
+        $id = $_POST["id"];
+        $city = $_POST["city"];
+        $query = "UPDATE Data SET city='$city' WHERE id=$id";
+        $dbh->exec($query);
+
     }
 
 
